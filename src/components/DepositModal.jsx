@@ -8,6 +8,7 @@ const DepositModal = (props) => {
         props.handleClose();
         setDepositNumber(0);
     }
+
     return (
         <Modal show={props.show} onHide={props.handleClose}>
             <Modal.Header closeButton>
@@ -16,11 +17,12 @@ const DepositModal = (props) => {
             <Modal.Body>
                 <Form>
                     <Form.Control
-                        type="text"
+                        type="number"
                         id="input"
                         placeholder="Enter amount"
                         name="deposit-amount"
                         onChange={e => setDepositNumber(e.target.value )}
+                        defaultValue={0}
                     />
                 </Form>
             </Modal.Body>

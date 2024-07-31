@@ -7,7 +7,7 @@ import moment from "moment";
 
 const MyWallet = () => {
 
-    const [amount, setAmount] = useState(10);
+    const [amount, setAmount] = useState(0);
     const [showDepositModal, setShowDepositModal] = useState(false);
     const [showWithDrawModal, setShowWithDrawModal] = useState(false);
     const [transactionData, setTransactionData] = useState([]);
@@ -17,7 +17,7 @@ const MyWallet = () => {
         setAmount(parseInt(depositNumber) + amount);
 
         // update transaction data
-        const transactionTime = moment().format('MMMM Do YYYY, h:mm:ss a');
+        const transactionTime = moment().format('DD MMMM, h:mm a');
 
         setTransactionData( 
             [ 
@@ -37,7 +37,7 @@ const MyWallet = () => {
         setAmount(amount - parseInt(withDrawAmount));
 
         // update transaction data
-        const transactionTime = moment().format('MMMM Do YYYY, h:mm:ss a');
+        const transactionTime = moment().format('DD MMMM, h:mm a');
 
         setTransactionData( 
             [ 
@@ -51,6 +51,10 @@ const MyWallet = () => {
             ]
         );
     }
+
+    const numberToString = (number) =>{
+        return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
     
     return (
         <div className="wallet-app">
@@ -58,14 +62,14 @@ const MyWallet = () => {
                 <h1 className="mb-4">
                     My Wallet
                 </h1>
-                <h3 className="mb-2" style={{color: 'yellow'}}>{amount && amount + '$'}</h3>
+                <h3 className="mb-2" style={{color: 'yellow'}}>{numberToString(amount) + ' $'}</h3>
                 <h5 className="mb-4">Total balance</h5>
                 <div className="actions d-flex mb-5">
                     <button className="btn btn-success" onClick={()=>setShowDepositModal(true)}>Deposit</button>
                     <button className="btn btn-danger" onClick={()=>setShowWithDrawModal(true)}>Withdraw</button>
                 </div>
                 <div className="transaction-history">
-                    <h2>Transaction history</h2>
+                    <h2>Transaction History</h2>
                     <div className="table-responsive">
                         <table className="table">
                             <tbody>
@@ -96,6 +100,7 @@ const MyWallet = () => {
                 show={showWithDrawModal}
                 handleClose={()=>setShowWithDrawModal(false)} 
                 withDrawHistory = {withDrawHistory}
+                currentAmount = {amount}
              />
         </div>
     )
